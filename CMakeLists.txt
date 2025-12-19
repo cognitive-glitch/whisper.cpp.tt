@@ -91,6 +91,7 @@ endif()
 option(WHISPER_COREML                "whisper: enable Core ML framework"  OFF)
 option(WHISPER_COREML_ALLOW_FALLBACK "whisper: allow non-CoreML fallback" OFF)
 option(WHISPER_OPENVINO              "whisper: support for OpenVINO"      OFF)
+option(WHISPER_TTNN                 "whisper: enable TT-NN backend"      OFF)
 
 # Required for relocatable CMake package
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/build-info.cmake)
@@ -101,6 +102,7 @@ set(GGML_SANITIZE_ADDRESS   ${WHISPER_SANITIZE_ADDRESS})
 set(GGML_SANITIZE_UNDEFINED ${WHISPER_SANITIZE_UNDEFINED})
 set(GGML_ALL_WARNINGS       ${WHISPER_ALL_WARNINGS})
 set(GGML_FATAL_WARNINGS     ${WHISPER_FATAL_WARNINGS})
+set(GGML_TTNN               ${WHISPER_TTNN})
 
 # transition helpers
 function (whisper_option_depr TYPE OLD NEW)
@@ -121,6 +123,7 @@ whisper_option_depr(WARNING     WHISPER_RPC                 GGML_RPC)
 whisper_option_depr(WARNING     WHISPER_SYCL                GGML_SYCL)
 whisper_option_depr(WARNING     WHISPER_SYCL_F16            GGML_SYCL_F16)
 whisper_option_depr(WARNING     WHISPER_CCACHE              GGML_CCACHE)
+whisper_option_depr(WARNING     WHISPER_TTNN                GGML_TTNN)
 
 if (GGML_CUDA AND NOT MSVC)
     #GGML_CUDA enabled, add the necessary compile options -Wno-deprecated-gpu-targets

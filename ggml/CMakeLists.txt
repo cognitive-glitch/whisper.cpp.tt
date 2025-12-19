@@ -241,6 +241,7 @@ option(GGML_SYCL                            "ggml: use SYCL"                    
 option(GGML_SYCL_F16                        "ggml: use 16 bit floats for sycl calculations"   OFF)
 option(GGML_SYCL_GRAPH                      "ggml: enable graphs in the SYCL backend"         ON)
 option(GGML_SYCL_DNN                        "ggml: enable oneDNN in the SYCL backend"         ON)
+option(GGML_TTNN                            "ggml: use TT-NN"                                 OFF)
 set   (GGML_SYCL_TARGET "INTEL" CACHE STRING
                                             "ggml: sycl target device")
 set   (GGML_SYCL_DEVICE_ARCH "" CACHE STRING
@@ -274,6 +275,11 @@ set(CMAKE_C_STANDARD_REQUIRED true)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
+
+if (GGML_TTNN)
+    # TT-Metalium requires C++17
+    set(CMAKE_CXX_STANDARD 17)
+endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
@@ -320,6 +326,7 @@ set(GGML_PUBLIC_HEADERS
     include/ggml-metal.h
     include/ggml-rpc.h
     include/ggml-sycl.h
+    include/ggml-ttnn.h
     include/ggml-vulkan.h
     include/ggml-webgpu.h
     include/ggml-zendnn.h
