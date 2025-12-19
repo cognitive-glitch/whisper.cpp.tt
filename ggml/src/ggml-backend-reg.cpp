@@ -41,6 +41,10 @@
 #include "ggml-sycl.h"
 #endif
 
+#ifdef GGML_USE_TTNN
+#include "ggml-ttnn.h"
+#endif
+
 #ifdef GGML_USE_VULKAN
 #include "ggml-vulkan.h"
 #endif
@@ -194,6 +198,9 @@ struct ggml_backend_registry {
 #endif
 #ifdef GGML_USE_SYCL
         register_backend(ggml_backend_sycl_reg());
+#endif
+#ifdef GGML_USE_TTNN
+        register_backend(ggml_backend_ttnn_reg());
 #endif
 #ifdef GGML_USE_VULKAN
         register_backend(ggml_backend_vk_reg());
@@ -623,6 +630,7 @@ void ggml_backend_load_all_from_path(const char * dir_path) {
     ggml_backend_load_best("opencl", silent, dir_path);
     ggml_backend_load_best("hexagon", silent, dir_path);
     ggml_backend_load_best("musa", silent, dir_path);
+    ggml_backend_load_best("ttnn", silent, dir_path);
     ggml_backend_load_best("cpu", silent, dir_path);
     // check the environment variable GGML_BACKEND_PATH to load an out-of-tree backend
     const char * backend_path = std::getenv("GGML_BACKEND_PATH");
